@@ -21,6 +21,10 @@ export const ProductsActionTypes = {
   GET_BEST_SELLER_SUCCESS: "GET_BEST_SELLER_SUCCESS",
   GET_BEST_SELLER_ERROR: "GET_BEST_SELLER_ERROR",
 
+  GET_FAVORITE: "GET_FAVORITE",
+  GET_FAVORITE_SUCCESS: "GET_FAVORITE_SUCCESS",
+  GET_FAVORITE_ERROR: "GET_FAVORITE_ERROR",
+
   GET_NEWEST: "GET_NEWEST",
   GET_NEWEST_SUCCESS: "GET_NEWEST_SUCCESS",
   GET_NEWEST_ERROR: "GET_NEWEST_ERROR",
@@ -141,6 +145,25 @@ const onGetBestSellerSuccess = (payload) => ({
 
 const onGetBestSellerError = (error) => ({
   type: ProductsActionTypes.GET_BEST_SELLER_ERROR,
+  payload: error,
+});
+
+/**
+ * favorite
+ **/
+
+const onGetFavorite = (payload) => ({
+  type: ProductsActionTypes.GET_FAVORITE,
+  payload,
+});
+
+const onGetFavoriteSuccess = (payload) => ({
+  type: ProductsActionTypes.GET_FAVORITE_SUCCESS,
+  payload
+});
+
+const onGetFavoriteError = (error) => ({
+  type: ProductsActionTypes.GET_FAVORITE_ERROR,
   payload: error,
 });
 
@@ -382,6 +405,10 @@ const ProductsActions = {
   onGetBestSeller,
   onGetBestSellerSuccess,
   onGetBestSellerError,
+
+  onGetFavorite,
+  onGetFavoriteSuccess,
+  onGetFavoriteError,
 
   onGetNewest,
   onGetNewestSuccess,

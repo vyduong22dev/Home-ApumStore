@@ -95,7 +95,7 @@ class AccessoryPage extends Component {
 
   redirectCategory = (category) =>{
     const {history} = this.props;
-    history.push(`/products/${category.pathseo}.${category.id}`)
+    history.push(`/products/${category.pathseo}.${category._id}`)
   }
 
   // Sort with brands
@@ -161,7 +161,7 @@ class AccessoryPage extends Component {
                     <div className="col-3 col-md-2 col-xl-1">
                       <div className="square">
                         <button className="rounded content bg-light" onClick={() => this.redirectCategory(item)}>
-                        <img src={item.image.publicUrl} alt=""></img>
+                        <img src={item.image.public_url} alt=""></img>
                         </button>
                       </div>
                       <p className="text-center font-weight-bold x-small">{item.name}</p>
@@ -182,9 +182,9 @@ class AccessoryPage extends Component {
             totalBrand.map((brand, index) =>{
             return(
               <button type="button" 
-              className={filter.brand === brand.id.id ? "rounded-pill shadow-sm bg-aqua text-dark mr-2 my-2 position-relative btn-padding" : "rounded-pill shadow-sm bg-light text-dark mr-2 my-2 position-relative btn-padding"} 
-              key={index} onClick={()=>this.onSetBrand(brand.id.id)}>
-                <img alt={brand.id.name} style={{height: "20px"}} src={brand.id.image && brand.id.image.publicUrl}/>
+              className={filter.brand === brand._id._id ? "rounded-pill shadow-sm bg-aqua text-dark mr-2 my-2 position-relative btn-padding" : "rounded-pill shadow-sm bg-light text-dark mr-2 my-2 position-relative btn-padding"} 
+              key={index} onClick={()=>this.onSetBrand(brand._id._id)}>
+                <img alt={brand._id.name} style={{height: "20px"}} src={brand._id.image && brand._id.image.public_url}/>
                 <span className="product-count">{brand.count}</span>
               </button>
             )})}

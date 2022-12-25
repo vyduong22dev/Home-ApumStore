@@ -31,6 +31,12 @@ export default function(state = init, action) {
         ...state,
         best: null, 
       };
+    case ProductsActionTypes.GET_FAVORITE:
+    case ProductsActionTypes.GET_FAVORITE_ERROR:
+      return {
+        ...state,
+        favorite: null, 
+      };
     case ProductsActionTypes.GET_NEWEST:
     case ProductsActionTypes.GET_NEWEST_ERROR:
       return {
@@ -53,6 +59,11 @@ export default function(state = init, action) {
       return {
         ...state,
         best: get(action, "payload"), 
+      };
+    case ProductsActionTypes.GET_FAVORITE_SUCCESS:
+      return {
+        ...state,
+        favorite: get(action, "payload"),
       };
     case ProductsActionTypes.GET_NEWEST_SUCCESS:
       return {

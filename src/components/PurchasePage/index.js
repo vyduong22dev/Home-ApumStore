@@ -18,7 +18,11 @@ import OrdersActions from "../../redux/actions/order";
 import ProductsActions from "../../redux/actions/products";
 
 const statusList = [
-  {
+  { 
+    name: "Chờ xác nhận",
+    name_en: "Pending",
+    state: {confirmed:-1,active:1},
+  },{
     name: "Chờ giao hàng",
     name_en: "Not delivery yet",
     state: {confirmed:1,status:-1}
@@ -58,7 +62,7 @@ class PurchasePage extends Component {
       var params = {
         ...filter,
         ...filters,
-        user: authInfo && authInfo.id
+        user: authInfo && authInfo._id
       };
       this.setState({queryParams: params})
       onGetList(params);
@@ -67,7 +71,7 @@ class PurchasePage extends Component {
 
   componentWillReceiveProps(props){
     const {authInfo} = this.props;
-    document.title = "[ApumStore] Trang bán hàng"
+    document.title = "[TellMe] Trang bán hàng"
     if(props.authInfo !== authInfo){
       const { onGetList, location } = this.props;
       const { filter } = this.state;
@@ -75,7 +79,7 @@ class PurchasePage extends Component {
       var params = {
         ...filter,
         ...filters,
-        user: props.authInfo && props.authInfo.id
+        user: props.authInfo && props.authInfo._id
       };
       this.setState({queryParams: params})
       if(props.authInfo)onGetList(params);
@@ -90,7 +94,7 @@ class PurchasePage extends Component {
       var params = {
         ...filter,
         ...filters,
-        user: authInfo && authInfo.id
+        user: authInfo && authInfo._id
       };
       this.setState({queryParams: params})
       onGetList(params);
@@ -190,7 +194,6 @@ class PurchasePage extends Component {
     const { orderList, orderItem, location, history, t, total, language } = this.props;
     const { keyword } = this.state;
     const filter = getFilterParams(location.search);
-    debugger;
     return (
       <div className="bg-user-info py-4">
         <div className="container emp-profile p-0 mt-5 mb-2">
@@ -228,19 +231,19 @@ class PurchasePage extends Component {
                 <div className="col-12 my-1" key={index}>
                   <div className="card shadow-sm">
                     <div className="card-header bg-primary text-white">
-                      <p className="float-start mb-0">{t('order.card.header')} {order.id}</p>
+                      <p className="float-start mb-0">{t('order.card.header')} {order._id}</p>
                       <p className="float-end mb-0">| {this.setStatus(order.confirmed, order.status, order.active)}</p>
                     </div>
                     <div className="card-body">
-                      {order.orderList.map((product, _index)=>{
+                      {order.order_list.map((product, _index)=>{
                         return(
                           <div className="row h-120" key={_index}>
                           <div className="col-3 text-center h-100">
-                            <img className="h-100" src={product.image ? product.image.publicUrl : INITIAL_IMAGE} alt={product.name}></img>
+                            <img className="h-100" src={product.image ? product.image : INITIAL_IMAGE} alt={product.name}></img>
                           </div>
                           <div className="col-6 align-self-center ">
                             <p className="font-weight-bold mb-0">{product.name}</p>
-                            <p className="font-italic mb-0">{t('common.color')} {product.nameColor}</p>
+                            <p className="font-italic mb-0">{t('common.color')} {product.color && product.color.name_vn}</p>
                             <p className="mb-0">{t('order.amount.label')} {product.quantity}</p>
                           </div>
                           <div className="col-3 text-right">
@@ -252,11 +255,11 @@ class PurchasePage extends Component {
                     </div>
                     <div className="card-footer">
                       <div className="float-start">
-                        <button type="button" className="btn btn-success mr-2" data-bs-toggle="modal" data-bs-target="#orderModal" onClick={()=> this.getInfoOrder(order.id)}>{t('common.detail.button')}</button>
-                        {this.setStatus(order.confirmed, order.status, order.active)==="Chờ xác nhận" && <button type="button" className="btn btn-danger" onClick={()=> this.onDeactivate(order.id)}>{t('common.destroy.button')}</button>}
+                        <button type="button" className="btn btn-success mr-2" data-bs-toggle="modal" data-bs-target="#orderModal" onClick={()=> this.getInfoOrder(order._id)}>{t('common.detail.button')}</button>
+                        {this.setStatus(order.confirmed, order.status, order.active)==="Chờ xác nhận" && <button type="button" className="btn btn-danger" onClick={()=> this.onDeactivate(order._id)}>{t('common.destroy.button')}</button>}
                       </div>
                       <div className="float-end font-weight-bold">
-                        {numberWithCommas(order.totalPrice)} VND
+                        {numberWithCommas(order.total_price)} VND
                       </div>
                     </div>
                   </div>

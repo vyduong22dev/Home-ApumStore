@@ -77,7 +77,7 @@ class Header extends Component {
     if (cart !== prevProps.cart) {
       for (let i = 0; i < cart.length; i++) {
         total = total + cart[i].quantity
-        totalPrice = totalPrice + cart[i].quantity * cart[i].product.colors.find(item=> item.id === cart[i].color).price
+        totalPrice = totalPrice + cart[i].quantity * cart[i].product.colors.find(item=> item._id === cart[i].color).price
       }
       this.setState({
         total,
@@ -85,49 +85,42 @@ class Header extends Component {
       })
     }
     if (userInfo !== prevProps.userInfo && userInfo) {
-      var user = userInfo.id;
+      var user = userInfo._id;
       onGetNewestNotifications({user, limit: 5, page: 0});
     }
     if (totalNotification !== prevProps.totalNotification) {
       this.setState({itemsCount: totalNotification})
     }
     if(userInfo){
-      socket.on(`order_${userInfo.id}`, res => {
+      socket.on(`order_${userInfo._id}`, res => {
         this.setState({itemsCount: itemsCount + 1, status: res.status, order: res.order, type: 0});
       });
-      socket.on(`installment_${userInfo.id}`, res => {
+      socket.on(`installment_${userInfo._id}`, res => {
         this.setState({itemsCount: itemsCount + 1, status: res.status, installment: res.installment, type: 2});
       });
     }
     if (itemsCount !== prevState.itemsCount && itemsCount > totalNotification) {
       if(type === 2){
         toastInfo(`${t('header.toastify.installment.first')} ${installment} ${t('header.toastify.installment.accept')}`);
-        onGetNewestNotifications({user: userInfo.id, limit: 5, page: 0})
+        onGetNewestNotifications({user: userInfo._id, limit: 5, page: 0})
       }
       else {
         switch (status) {
           case 0:
             toastInfo(`${t('header.toastify.cart.first')} ${order} ${t('header.toastify.cart.export')}`);
-            onGetNewestNotifications({user: userInfo.id, limit: 5, page: 0})
+            onGetNewestNotifications({user: userInfo._id, limit: 5, page: 0})
             break;
           case 1:
             toastInfo(`${t('header.toastify.cart.first')} ${order} ${t('header.toastify.cart.done')}`);
-            onGetNewestNotifications({user: userInfo.id, limit: 5, page: 0})
+            onGetNewestNotifications({user: userInfo._id, limit: 5, page: 0})
             break;
           default:
-            onGetNewestNotifications({user: userInfo.id, limit: 5, page: 0})
+            onGetNewestNotifications({user: userInfo._id, limit: 5, page: 0})
         }
       }
     }
   }
 
-  checkLogin = (userInfo) => {
-    if(userInfo && Object.keys(userInfo).length === 0
-    && Object.getPrototypeOf(userInfo) === Object.prototype){
-      this.setLogout();
-      userInfo = undefined;
-    }
-  }
   setLogout= () => {
     const {onLogout, history} = this.props;
     localStorage.removeItem('AUTH_USER')
@@ -188,7 +181,7 @@ class Header extends Component {
           return(
           <div className="row" key={index}>
             <div className="col-3">
-            <img className="w-100 rounded" src={notification.image ? notification.image.publicUrl : INITIAL_IMAGE} alt={index}></img>
+            <img className="w-100 rounded" src={notification.image ? notification.image.public_url : INITIAL_IMAGE} alt={index}></img>
             </div>
             <div className="col-9">
         <p className="mb-0">{notification.name}</p>
@@ -204,7 +197,7 @@ class Header extends Component {
           return(
           <div className="row" key={index}>
             <div className="col-3">
-            <img className="w-100 rounded" src={notification.image ? notification.image.publicUrl : INITIAL_IMAGE} alt={index}></img>
+            <img className="w-100 rounded" src={notification.image ? notification.image.public_url : INITIAL_IMAGE} alt={index}></img>
             </div>
             <div className="col-9">
         <p className="mb-0">{notification.name}</p>
@@ -220,7 +213,7 @@ class Header extends Component {
           return(
           <div className="row" key={index}>
             <div className="col-3">
-            <img className="w-100 rounded" src={notification.image ? notification.image.publicUrl : INITIAL_IMAGE} alt={index}></img>
+            <img className="w-100 rounded" src={notification.image ? notification.image.public_url : INITIAL_IMAGE} alt={index}></img>
             </div>
             <div className="col-9">
         <p className="mb-0">{notification.name}</p>
@@ -256,9 +249,7 @@ class Header extends Component {
     }
     const { total, totalPrice, currencyCode, language, keyword, itemsCount, edit }=this.state;
     const {userInfo, isLogin, listCategories, t, listProducts, currency, location, listNotification, cart} = this.props;
-    const notVND = currencyCode==="VND" ? numberWithCommas(totalPrice) : numberWithCommas(totalPrice);
-    this.checkLogin(userInfo);
-
+    const notVND = currencyCode==="VND" ? numberWithCommas(totalPrice) : numberWithCommas(parseFloat(tryConvert(totalPrice, currencyCode, false)).toFixed(2));
     return (
       <>
         <div className="header-area">
@@ -270,7 +261,7 @@ class Header extends Component {
                     {userInfo && <>
                       <li>
                         <a href="/#/account/detail" className="text-decoration-none">
-                          <FontAwesomeIcon icon={faUser} />{userInfo.firstname} {userInfo.lastname}
+                          <FontAwesomeIcon icon={faUser} /> {userInfo.firstname} {userInfo.lastname}
                         </a>
                       </li>
                       <li>
@@ -324,10 +315,10 @@ class Header extends Component {
                     <i className="fa fa-money-bill-wave"></i>
                     <select className="select-box" onChange={this.handleChangeCurrency} value={currencyCode}>
                       <option value="VND">{t('header.vnd.select')}</option>
-                      {/* <option value="USD">{t('header.usd.select')}</option>
+                      <option value="USD">{t('header.usd.select')}</option>
                       <option value="CNY">{t('header.cny.select')}</option>
                       <option value="EUR">{t('header.eur.select')}</option>
-                      <option value="JPY">{t('header.jpy.select')}</option> */}
+                      <option value="JPY">{t('header.jpy.select')}</option>
                     </select>
                     </li>
                     <li className="dropdown dropdown-small">
@@ -366,11 +357,11 @@ class Header extends Component {
                   <><h4 className="mb-0 mx-3">{t("header.search.recommended")}</h4>
                   {listProducts.map((product, index) =>{
                     return (
-                      <Link to={`/product/${product.pathseo}.${product.id}`} className="text-decoration-none directory rounded p-2 mx-2" key={index}
+                      <Link to={`/product/${product.pathseo}.${product._id}`} className="text-decoration-none directory rounded p-2 mx-2" key={index}
                       onClick={()=> this.onReload()} style={{textDecoration: 'none'}}>
                       <div className="row text-dark text-decoration-none " style={{height: "60px"}}>
                         <div className="col-3 my-auto">
-                          <><img style={{height: "60px"}} src={product.bigimage.publicUrl} alt={product.name}></img></>
+                          <><img style={{height: "60px"}} src={product.bigimage.public_url} alt={product.name}></img></>
                         </div>
                         <div className="col-9 text-left my-auto">
                           <p className="mb-0">{product.name}</p>
@@ -386,7 +377,7 @@ class Header extends Component {
               <div className="col-12 col-xl-3 align-self-center py-1">
                 <div className="shopping-item rounded-pill shadow-sm">
                   <Link to="/carts" className="text-decoration-none" data-tip data-for='cart'>
-                    <span className="rounded-circle bg-danger" style={{padding: "0.15rem 0.25rem"}}><i className="fa fa-shopping-cart text-white"></i></span> · <span className="cart-amunt">{notVND ? `${notVND} ${currencyCode}` : "0 VND"}</span> 
+                    <span className="rounded-circle bg-danger" style={{padding: "0.15rem 0.25rem"}}><i className="fa fa-shopping-cart text-white"></i></span> · <span className="cart-amunt">{notVND ? `${notVND} ${currencyCode}` : "Empty"}</span> 
                     <span className="product-count">{total}</span>
                   </Link>
                   <ReactTooltip id='cart' place="bottom" type="light" class="shadow-sm bg-white" effect="solid" getContent={(dataTip) => 
@@ -397,11 +388,11 @@ class Header extends Component {
                         return(
                         <div className="row" key={index}>
                           <div className="col-3">
-                          <img className="w-100 rounded" src={item.product.bigimage ? item.product.bigimage.publicUrl : INITIAL_IMAGE} alt={index}></img>
+                          <img className="w-100 rounded" src={item.product.bigimage ? item.product.bigimage.public_url : INITIAL_IMAGE} alt={index}></img>
                           </div>
                           <div className="col-9">
                       <p className="font-weight-bold mb-0">{item.product.name}</p>
-                      <p className="mb-0">{t('common.color')} {item.product.colors.find(i => i.id === item.color).name_en}</p>
+                      <p className="mb-0">{t('common.color')} {item.product.colors.find(i => i._id === item.color).name_en}</p>
                           </div>
                         </div>
                         )
@@ -436,7 +427,7 @@ class Header extends Component {
                     {location.hash.indexOf("account") === -1 && listCategories && <>
                       {listCategories.map((category, index)=>{
                         return (
-                          <MenuLink key={index} image={category.image.publicUrl} label={language ==="vn" ? category.name : category.name_en} to={`/products/${category.pathseo}.${category.id}`} activeOnlyWhenExact={true} />
+                          <MenuLink key={index} image={category.image.public_url} label={language ==="vn" ? category.name : category.name_en} to={`/products/${category.pathseo}.${category._id}`} activeOnlyWhenExact={true} />
                         )
                       })}
                       <MenuLink image={assets("module.png")} label={t('header.accessories.menu')} to={"/products/accessories"} activeOnlyWhenExact={true} />

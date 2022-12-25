@@ -26,8 +26,7 @@ export const forgotPassword = (data) =>{
 
 //5. Từ token lấy thông tin người dùng
 export const getProfile = (data) =>{
-  console.log(data);
-  return axiosService.post(`${API_ENDPOINT_AUTH}${url}/auth/profile`, data);
+  return axiosService.post(`${API_ENDPOINT_AUTH}${url}/api/auth/profile`, data);
 };
 
 //6. Đăng nhập với Gooogle http://localhost:3000/users/auth/google

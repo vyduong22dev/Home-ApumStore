@@ -55,7 +55,7 @@ class NotificationPage extends Component {
       var params = {
         ...filter,
         ...filters,
-        user: authInfo && authInfo.id
+        user: authInfo && authInfo._id
       };
       this.setState({queryParams: params})
       onGetList(params);
@@ -70,7 +70,7 @@ class NotificationPage extends Component {
       var params = {
         ...filter,
         ...filters,
-        user: authInfo && authInfo.id
+        user: authInfo && authInfo._id
       };
       this.setState({queryParams: params})
       onGetList(params);
@@ -79,7 +79,7 @@ class NotificationPage extends Component {
 
   componentWillReceiveProps(props){
     const {authInfo} = this.props;
-    document.title = "[ApumStore] Trang bán hàng"
+    document.title = "[TellMe] Trang bán hàng"
     if(props.authInfo !== authInfo){
       const { onGetList, location } = this.props;
       const { filter } = this.state;
@@ -87,7 +87,7 @@ class NotificationPage extends Component {
       var params = {
         ...filter,
         ...filters,
-        user: props.authInfo && props.authInfo.id
+        user: props.authInfo && props.authInfo._id
       };
       this.setState({queryParams: params})
       if(props.authInfo)onGetList(params);
@@ -106,14 +106,14 @@ class NotificationPage extends Component {
   onReadAllNoti = () =>{
     const {authInfo, onUpdateAll} = this.props;
     const {queryParams} = this.state;
-    const data = {user : authInfo.id}
+    const data = {user : authInfo._id}
     onUpdateAll(data, queryParams)
   }
 
   onDeleteAllNoti = () =>{
     const {authInfo, onDeleteAll} = this.props;
     const {queryParams} = this.state;
-    const id = authInfo.id
+    const id = authInfo._id
     onDeleteAll(id, queryParams)
   }
 
@@ -198,7 +198,7 @@ class NotificationPage extends Component {
                   <p className="mb-0 text-secondary">{new Date(notification.createdAt).toLocaleDateString("vi-VN")}</p>
                 </div>
                 <div className="col-2 text-center h-100">
-                  <img className="h-100" src={notification.image ? notification.image.publicUrl : INITIAL_IMAGE} alt=""></img>
+                  <img className="h-100" src={notification.image ? notification.image.public_url : INITIAL_IMAGE} alt=""></img>
                 </div>
                 <div className="col-7 align-self-center">
             <p className="font-weight-bold">{notification.name}</p>
@@ -207,10 +207,10 @@ class NotificationPage extends Component {
                 <div className="col-2 text-right align-self-center">
                   <button type="button" className="btn btn-success mr-2" 
                   data-bs-toggle={notification.type === 1 ? "" : "modal"} data-bs-target={this.setModal(notification.type)} 
-                  onClick={()=> this.onReadNoti(notification.id, notification.type, notification.link)}>
+                  onClick={()=> this.onReadNoti(notification._id, notification.type, notification.link)}>
                     <i className="fa fa-book-reader"></i>
                   </button>
-                  <button type="button" className="btn btn-info" onClick={()=> this.onDeleteNoti(notification.id)}>
+                  <button type="button" className="btn btn-info" onClick={()=> this.onDeleteNoti(notification._id)}>
                     <i className="fa fa-trash-alt"></i>
                   </button>
                 </div>

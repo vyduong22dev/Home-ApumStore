@@ -22,14 +22,9 @@ function* handleLogin({ payload }) {
   try {
     const result = yield call(loginAccount, payload);
     const data = get(result, "data", {});
-    if (data.code !== 200){
-      localStorage.removeItem('AUTH_USER');
-      throw data;
-    }
-    else{
-      localStorage.setItem('AUTH_USER', data.user.token);
-      yield put(AuthorizationActions.onLoginSuccess(data.user));
-    }
+    if (data.code !== 200) throw data;
+    localStorage.setItem('AUTH_USER', result.headers.authorization);
+    yield put(AuthorizationActions.onLoginSuccess(data.user));
   } catch (error) {
     yield put(AuthorizationActions.onLoginError(error));
   }

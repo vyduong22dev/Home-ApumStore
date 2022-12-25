@@ -8,28 +8,33 @@ import { withTranslation } from "react-i18next";
 // @Actions
 import AuthorizationActions from '../../redux/actions/auth'
 // @Components
+import { GoogleLogin } from 'react-google-login';
+import { FacebookProvider, Login } from 'react-facebook';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookF, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import ForgotPassword from './ForgotPass';
 import { toastError } from '../../utils/toastHelper';
 // @Constance
-import brandpng from '../../img/identification-documents.png'
-import bgsvg from '../../img/brand.png'
+import { GOOGLE_ID, FACEBOOK_ID } from '../../constants'
+
 class LoginPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			phonenumber: '',
+			email: '',
 			password: '',
 		}
 	}
 
 	onLogin = () =>{
-		const { phonenumber, password } = this.state;
+		const { email, password } = this.state;
 		const { onLogin, t } = this.props;
 		const data = {
-			phonenumber, 
+			email, 
 			password
 		};
-		if(phonenumber && password){
+		if(email && password){
 			onLogin(data);
 		}
 		else{
@@ -50,7 +55,7 @@ class LoginPage extends Component {
 	}
 
 	componentDidMount(){ 
-		document.title = "[ApumStore] Đăng nhập"
+		document.title = "[TellMe] Đăng nhập"
 		this.improveScreen()
 	}
 
@@ -80,27 +85,37 @@ class LoginPage extends Component {
 		});
 	}
 
+	responseGoogle = (response) => {
+		const {onLoginGoogle} = this.props;
+		onLoginGoogle(response.accessToken);
+  }
+
+  responseFacebook = (response) => {
+		const {onLoginFacebook} = this.props;
+		onLoginFacebook(response.accessToken);
+	}
+
 	render() {
 		const { t } = this.props;
-		const { phonenumber, password } = this.state;
+		const { email, password } = this.state;
 		return (
 			<div>
 				<img className="wave" src={ assets("wave.png")} alt="" />
 				<div className="container_login">
-				<div className="img">
-						<img src={ bgsvg} alt="" />
+					<div className="img">
+						<img src={ assets("bg.svg")} alt="" />
 					</div>
 					<div className="login-content">
 						<form>
-							<h2 className="title">Trang đăng nhập khách hàng</h2>
-							<img className="pb-4" src={brandpng} alt=""></img>
+							<h2 className="title">Welcome to</h2>
+							<img className="pb-4" src={assets("brand.png")} alt=""></img>
 							<div className="input-div one">
 								<div className="i">
 									<i className="fas fa-user" />
 								</div>
 								<div className="div">
-									<h5>Số điện thoại</h5>
-									<input type="phonenumber" className="input" name="phonenumber" value={phonenumber} onChange={this.onChange}/>
+									<h5>Email</h5>
+									<input type="email" className="input" name="email" value={email} onChange={this.onChange}/>
 								</div>
 							</div>
 							<div className="input-div pass">
@@ -108,20 +123,43 @@ class LoginPage extends Component {
 									<i className="fas fa-lock" />
 								</div>
 								<div className="div">
-									<h5>Mật khẩu</h5>
+									<h5>Password</h5>
 									<input type="password" className="input" name="password" value={password} onChange={this.onChange}/>
 								</div>
 							</div>
-							<div onClick={()=> this.onForgotPass} className="text-right" data-bs-toggle="modal" data-bs-target="#forgotPassword">Quên mật khẩu?</div>
+							<div onClick={()=> this.onForgotPass} className="text-right" data-bs-toggle="modal" data-bs-target="#forgotPassword">Forgot Password?</div>
 							<div className="row">
 								<div className="col-12">
-									<button type="button" className="btn" value="Đăng nhập" onClick={()=> this.onLogin()}>{t('header.login.button')}</button>
+									<button type="button" className="btn" onClick={()=> this.onLogin()}>{t('header.login.button')}</button>
 								</div>
 								<div className="col-12">
 									<form action="/user/dang-ky">
-										<button type="submit" className="btn" value="Đăng ký">{t('header.signup.button')}</button>
+										<button type="submit" className="btn" value="Register">{t('header.signup.button')}</button>
 									</form>
 								</div>
+								
+								<div className="col-12">
+									<GoogleLogin
+									clientId={GOOGLE_ID}
+									buttonText="Login"
+									onSuccess={this.responseGoogle}
+									onFailure={this.responseGoogle}
+									render={renderProps => (
+										<button onClick={renderProps.onClick} disabled={renderProps.disabled} className="btn-danger mr-3"><FontAwesomeIcon icon={faGoogle} className="mr-1"/>Login with Google</button>
+									)}
+									/>
+								</div>
+								<form onSubmit={this.onSubmit} className="col-12 w-100">
+									<FacebookLogin
+									appId={FACEBOOK_ID}
+									autoLoad={true}
+									onFailure={this.responseFacebook}
+									callback={this.responseFacebook}
+									render={renderProps => (
+										<button onClick={renderProps.onClick} className="btn-primary"><FontAwesomeIcon icon={faFacebookF} className="mr-1"/>Login with Facebook</button>
+									)}
+									/>
+								</form>
 							</div>
 						</form>
 						<ForgotPassword/>
@@ -143,7 +181,14 @@ const mapDispatchToProps =(dispatch)=> {
 	return {
 		onLogin : (data) =>{
 			dispatch(AuthorizationActions.onLogin(data))
-		}
+		},
+		onLoginFacebook : (token) =>{
+			dispatch(AuthorizationActions.onLoginFacebook(token))
+		},
+		onLoginGoogle : (token) =>{
+			dispatch(AuthorizationActions.onLoginGoogle(token))
+		},
+
 	}
 };
 

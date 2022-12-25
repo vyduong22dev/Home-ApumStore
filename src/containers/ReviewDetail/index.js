@@ -29,13 +29,13 @@ class ReviewDetail extends Component {
     const { onAddReview, onUpdateReview,  authInfo, product, review, onCloseModal, modal, onClearDetail } = this.props;
     var data = {
       content: message,
-      user: authInfo.id,
+      user: authInfo._id,
       product: product.product,
       rating,
-      color: product.color.id
+      color: product.color._id
     }
     if(review){
-      onUpdateReview(review.id, data)
+      onUpdateReview(review._id, data)
     }
     else{
       onAddReview(data);
@@ -76,7 +76,7 @@ class ReviewDetail extends Component {
             </div>
             <div className="col-9  align-self-center">
               <p className="font-weight-bold mb-0">{product.name}</p>
-              <p className="text-secondary mb-0">{t('common.color')}: {product.color.nameVn}</p>
+              <p className="text-secondary mb-0">{t('common.color')}: {product.color.name_vn}</p>
             </div>
           </div>
           <div className="review_box">

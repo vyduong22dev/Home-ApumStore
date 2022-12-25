@@ -27,10 +27,11 @@ class HomePage extends Component {
   }
 
   componentDidMount(){
-    const {onGetBestSeller, onGetNewest, onGetListAd} = this.props;
-    document.title = "[ApumStore] Trang bán hàng"
+    const {onGetBestSeller, onGetFavorite, onGetNewest, onGetListAd} = this.props;
+    document.title = "[TellMe] Trang bán hàng"
     onGetListAd({active: 1});
     onGetBestSeller();
+    onGetFavorite();
     onGetNewest();
   }
   next = () => {
@@ -57,9 +58,8 @@ class HomePage extends Component {
 
   render() {
     const {activeIndex} = this.state;
-    const { t, bestSeller, newest, listAd } = this.props;
-    console.log("best sell today");
-    console.log(JSON.stringify(bestSeller));
+    const { t, bestSeller, newest, favorite, listAd } = this.props;
+    
     return (<>
       <div className="promo-area">
         <div className="zigzag-bottom"></div>
@@ -87,10 +87,10 @@ class HomePage extends Component {
                       <CarouselItem
                         onExiting={() => this.setState({animating: true})}
                         onExited={() => this.setState({animating: false})}
-                        key={item.id}
+                        key={item._id}
                       >
-                        <Link to={item.link.replace("https://localhost:3000/#", "")}>
-                        <img src={item.image.publicUrl} alt={item.name} />
+                        <Link to={item.link.replace("https://localhost:5000/#", "")}>
+                        <img src={item.image.public_url} alt={item.name} />
                         </Link>
                         
                       </CarouselItem>
@@ -127,26 +127,40 @@ class HomePage extends Component {
         <div className="zigzag-bottom"></div>
         <div className="container">
           <div className="row">
-            {/* <div className="col-12 my-2">
+            <div className="col-12 my-2">
               <div className="latest-product">
                 <h2 className="text-center">{t('home.list.best')}</h2>
                 <div className="shadow p-3 mb-5 bg-white rounded">
                   <div className="row">
                     {bestSeller ? bestSeller.map((product, index) => {
                       return (
-                          <ProductItem product={product.id} key={index} />
+                          <ProductItem product={product._id} key={index} />
                         )
                     }) : <Loader/>}
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
             <div className="col-12 my-2">
               <div className="latest-product">
                 <h2 className="text-center">{t('home.list.new')}</h2>
                 <div className="shadow p-3 mb-5 bg-white rounded">
                   <div className="row">
                     {newest ? newest.map((product, index) => {
+                      return (
+                          <ProductItem product={product} key={index} />
+                        )
+                    }) : <Loader/>}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-12 my-2">
+              <div className="latest-product">
+                <h2 className="text-center">{t('home.list.favorite')}</h2>
+                <div className="shadow p-3 mb-5 bg-white rounded">
+                  <div className="row">
+                    {favorite ? favorite.map((product, index) => {
                       return (
                           <ProductItem product={product} key={index} />
                         )
@@ -168,6 +182,7 @@ class HomePage extends Component {
 const mapStateToProps = (state) => {
   return {
     bestSeller: state.products.best,
+    favorite: state.products.favorite,
     newest: state.products.new,
     listAd: state.ad.list,
   }
@@ -177,6 +192,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onGetBestSeller: () => {
       dispatch(ProductsActions.onGetBestSeller());
+    },
+    onGetFavorite: () => {
+      dispatch(ProductsActions.onGetFavorite());
     },
     onGetNewest: () => {
       dispatch(ProductsActions.onGetNewest());

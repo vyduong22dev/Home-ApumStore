@@ -51,14 +51,14 @@ class DetailPage extends Component {
     const {authInfo, onHistoryProduct} = this.props;
     if (nextProps.authInfo !== authInfo && nextProps.authInfo) {
       var history = [];
-      nextProps.authInfo.history.map(item => history.push(item.id));
+      nextProps.authInfo.history.map(item => history.push(item._id));
       const index = history.findIndex(product => product === nextProps.match.params.productID)
       if(index === -1){
         history.push(nextProps.match.params.productID)
         if(history.length > 4){
           history.shift();
         }
-        onHistoryProduct(nextProps.authInfo.id, {history})
+        onHistoryProduct(nextProps.authInfo._id, {history})
       }
     }
   }
@@ -114,19 +114,17 @@ class DetailPage extends Component {
   }
 
   setColor = (item) =>{
-    debugger;
     this.setState({
-      imageColor: item.imageLink,
-      check: item.id
+      imageColor: item.image_link,
+      check: item._id
     })
   }
 
   onAddToCart = (product, quantity) =>{
     var { onAddProductToCart, t } = this.props;
     const { check } = this.state;
-    debugger;
     product = {
-      id: product.id,
+      _id: product._id,
       colors: product.colors,
       bigimage: product.bigimage,
       name: product.name,
@@ -150,14 +148,14 @@ class DetailPage extends Component {
       toastError(`${t('detail.toastify.error')}`)
     }
     else{
-      history.push(`/installment/${product.pathseo}.${product.id}.${check}`)
+      history.push(`/installment/${product.pathseo}.${product._id}.${check}`)
     }
   }
 
   onCompare = (product) => {
     const { history } = this.props;
-    console.log(product.category.id)
-    history.push(`/compare/${product.category.id}?compare=${product.id}`)
+    console.log(product.category._id)
+    history.push(`/compare/${product.category._id}?compare=${product._id}`)
   }
   
   setPrice = (currency, min, max) =>{
@@ -216,11 +214,11 @@ class DetailPage extends Component {
     const { onUpdateReview, authInfo, t } = this.props;
     const { queryParams } = this.state;
     if(authInfo){
-      if(like.indexOf(authInfo.id) === -1){
-        like.push(authInfo.id)
+      if(like.indexOf(authInfo._id) === -1){
+        like.push(authInfo._id)
       }
       else{
-        like.splice(like.indexOf(authInfo.id), 1);
+        like.splice(like.indexOf(authInfo._id), 1);
       }
       onUpdateReview(id, {like}, queryParams)
     }
@@ -243,13 +241,13 @@ class DetailPage extends Component {
     } = this.props;
     const {quantity, imageColor, check, _check } = this.state;
     const filter = getFilterParams(location.search);
-     
+    
     return (<>
       <div className="application">
         <Helmet>
           <meta charSet="utf-8" />
           <title>{product && product.name}</title>
-          <link rel="" href={product && `${LOCAL}/#/product/${product.pathseo}.${product.id}`} />
+          <link rel="" href={product && `${LOCAL}/#/product/${product.pathseo}.${product._id}`} />
         </Helmet>
       </div>
       {product ? <div className="container my-3">
@@ -262,21 +260,21 @@ class DetailPage extends Component {
               <div className="col-12 my-2">
                 <a className="text-decoration-none directory rounded p-2" href="/#/">{t('header.home.menu')}</a>
                 <i className="fa fa-chevron-right px-2 w-25-px "></i>
-                <a className="text-decoration-none directory rounded p-2" href={`/#/products/${product.category.pathseo}.${product.category.id}`}>{product.category.name}</a>
+                <a className="text-decoration-none directory rounded p-2" href={`/#/products/${product.category.pathseo}.${product.category._id}`}>{product.category.name}</a>
                 <i className="fa fa-chevron-right px-2 w-25-px "></i>
               </div>
               <div className="col-12">
                 <h1 className="my-0 font-weight-bold">{product.name}</h1>
                 <div className="product-inner-price form-inline">
-                  <ins>{product.priceMin && this.setPrice(currency, product.priceMin, product.priceMax)} {currency}</ins>
-                  {product.realPriceMin && <del>{this.setPrice(currency, product.realPriceMin, product.realPriceMax)} {currency}</del>}
-                  {product.realPriceMin && product.realPriceMin > product.priceMin && 
+                  <ins>{product.price_min && this.setPrice(currency, product.price_min, product.price_max)} {currency}</ins>
+                  {product.real_price_min && <del>{this.setPrice(currency, product.real_price_min, product.real_price_max)} {currency}</del>}
+                  {product.real_price_min && product.real_price_min > product.price_min && 
                   <div className="discount ml-2">
                     <div className="d-flex h-discount text-orange">
                       <svg className="_2DRZW" viewBox="-0.5 -0.5 4 16">
                         <path d="M4 0h-3q-1 0 -1 1a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3q0 1 1 1h3" strokeWidth="1" transform="" stroke="currentColor" fill="#f69113"></path>
                       </svg>
-                  <div className="discount-content">{t('common.discount')} {parseInt((1 - product.priceMin/product.realPriceMin)*100)}%</div>
+                  <div className="discount-content">{t('common.discount')} {parseInt((1 - product.price_min/product.real_price_min)*100)}%</div>
                       <svg className="h-discount" viewBox="-0.5 -0.5 4 16">
                         <path d="M4 0h-3q-1 0 -1 1a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3v0.333a1.2 1.5 0 0 1 0 3q0 1 1 1h3" strokeWidth="1" transform="rotate(180) translate(-3 -15)" stroke="currentColor" fill="#f69113">
                         </path>
@@ -285,22 +283,22 @@ class DetailPage extends Component {
                   </div>}
                 </div>
               </div>
-              {/* <div className="col-12">
+              <div className="col-12">
                 <Rating
                   initialRating={product.stars}
                   emptySymbol="fa fa-star text-secondary"
                   fullSymbol="fa fa-star text-warning"
                   readonly
                 /><span className="ml-2">{total} {t('common.review')}</span>
-              </div> */}
+              </div>
               {group && <div className="col-12 form-inline">
                 {group.products.map(item =>{
-                  return(<button type="button" key={item.id} 
+                  return(<button type="button" key={item._id} 
                     className="card text-dark py-2 px-3 my-2 mr-3 w-auto"
-                    onClick={()=> this.onReload(`/product/${item.product.pathseo}.${item.product.id}`)}>
-                    <p className="mb-0 h6">{item.name} <span className={_check===item.product.id ? "d-inline-block" : "d-none"}>
+                    onClick={()=> this.onReload(`/product/${item.product.pathseo}.${item.product._id}`)}>
+                    <p className="mb-0 h6">{item.name} <span className={_check===item.product._id ? "d-inline-block" : "d-none"}>
                       <i className="fa fa-check"></i></span></p>
-                    <p className="mb-0 h7">{item.product.priceMin ? this.setPrice(currency, item.product.priceMin, item.product.priceMin) : 'Loading'} {currency}</p>
+                    <p className="mb-0 h7">{item.product.price_min ? this.setPrice(currency, item.product.price_min, item.product.price_min) : 'NaN'} {currency}</p>
                   </button>)
                 })}
               </div>}
@@ -309,11 +307,11 @@ class DetailPage extends Component {
               <div className="col-12 form-inline">
                 {product.colors.map((item, index)=>{
                   return(
-                  <button type="button" key={item.id} 
+                  <button type="button" key={item._id} 
                     className={item.amount===0 ? "card text-dark py-2 px-3 my-2 mr-3 bg-active" :"card text-dark py-2 px-3 my-2 mr-3"} 
                     onClick={() => this.setColor(item)} 
                     disabled={item.amount===0 ? true : false}>
-                    <p className="mb-0 h6">{item.nameVn} <span className={check===item.id ? "d-inline-block" : "d-none"}>
+                    <p className="mb-0 h6">{item.name_vn} <span className={check===item._id ? "d-inline-block" : "d-none"}>
                       <i className="fa fa-check"></i></span></p>
                     <p className="mb-0 h7">{this.setPrice(currency, item.price, item.price)} {currency}</p>
                   </button>)
@@ -349,7 +347,7 @@ class DetailPage extends Component {
               </div>
               <div className="mb-2 border-bottom"></div>
               <div className="col-12 text-center">
-                {/* <button className="btn btn-lighter" type="button" onClick={() => this.onCompare(product)}><i className="fa fa-balance-scale text-warning"></i> {t("compare.page.title")}</button> */}
+                <button className="btn btn-lighter" type="button" onClick={() => this.onCompare(product)}><i className="fa fa-balance-scale text-warning"></i> {t("compare.page.title")}</button>
                 <button className="btn btn-lighter bg-aqua" type="button" onClick={() => this.onAddToCart(product, quantity)}><i className="fa fa-cart-plus text-danger"></i> {t('shop.add-to-cart.button')}</button>
                 <button className="btn btn-lighter" type="button" onClick={() => this.onInstallment(product)}><i className="fa fa-money-check-alt text-success"></i> {t('detail.installment.button')}</button>
               </div>
@@ -393,7 +391,7 @@ class DetailPage extends Component {
                         </div>}
                       </div>
                     </div>
-                    {/* <div className="tab-pane fade" id="like" role="tab" aria-labelledby="like-tab">
+                    <div className="tab-pane fade" id="like" role="tab" aria-labelledby="like-tab">
                       <div className="row">
                         {review && review.length > 0 ? (like ? (like.length > 0 ? like.map((product, index) => {
                           return (
@@ -416,7 +414,7 @@ class DetailPage extends Component {
                         </div>
                       </div>}
                       </div>
-                    </div> */}
+                    </div>
                     <div className="tab-pane fade show active" id="relate" role="tab" aria-labelledby="relate-tab">
                       <div className="row">
                         {product.description && product.description.length > 15 ? (relate ? relate.map((product, index) => {
@@ -481,7 +479,7 @@ class DetailPage extends Component {
                   <div className="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="contact-tab">
                     <div className="row">
                       <div className="col-12">
-                        <div className="fb-comments" data-href={`${LOCAL}/#/product/${product.pathseo}/${product.id}`} data-width="100%" data-numposts="5"></div>
+                        <div className="fb-comments" data-href={`${LOCAL}/#/product/${product.pathseo}/${product._id}`} data-width="100%" data-numposts="5"></div>
                       </div>
                     </div>
                   </div>
@@ -506,31 +504,31 @@ class DetailPage extends Component {
                                   emptySymbol="fa fa-star text-secondary"
                                   fullSymbol="fa fa-star text-warning"
                                   readonly
-                                  /></span>{count.find(i => i.id===5) ? count.find(i => i.id===5).count  : 0}</li>
+                                  /></span>{count.find(i => i._id===5) ? count.find(i => i._id===5).count  : 0}</li>
                                 <li>4 Star <span className="mx-2"><Rating
                                   initialRating={4}
                                   emptySymbol="fa fa-star text-secondary"
                                   fullSymbol="fa fa-star text-warning"
                                   readonly
-                                  /></span>{count.find(i => i.id===4) ? count.find(i => i.id===4).count  : 0}</li>
+                                  /></span>{count.find(i => i._id===4) ? count.find(i => i._id===4).count  : 0}</li>
                                 <li>3 Star <span className="mx-2"><Rating
                                   initialRating={3}
                                   emptySymbol="fa fa-star text-secondary"
                                   fullSymbol="fa fa-star text-warning"
                                   readonly
-                                  /></span>{count.find(i => i.id===3) ? count.find(i => i.id===3).count  : 0}</li>
+                                  /></span>{count.find(i => i._id===3) ? count.find(i => i._id===3).count  : 0}</li>
                                 <li>2 Star <span className="mx-2"><Rating
                                   initialRating={2}
                                   emptySymbol="fa fa-star text-secondary"
                                   fullSymbol="fa fa-star text-warning"
                                   readonly
-                                /></span>{count.find(i => i.id===2) ? count.find(i => i.id===2).count  : 0}</li>
+                                /></span>{count.find(i => i._id===2) ? count.find(i => i._id===2).count  : 0}</li>
                                 <li>1 Star <span className="mx-2"><Rating
                                   initialRating={1}
                                   emptySymbol="fa fa-star text-secondary"
                                   fullSymbol="fa fa-star text-warning"
                                   readonly
-                                /></span>{count.find(i => i.id===1) ? count.find(i => i.id===1).count  : 0}</li>
+                                /></span>{count.find(i => i._id===1) ? count.find(i => i._id===1).count  : 0}</li>
                               </ul>}
                             </div>
                           </div>
@@ -544,7 +542,7 @@ class DetailPage extends Component {
                               <div className="row" key={index}>
                                 <div className="col-12">
                                 <div className="float-start mr-3">
-                                  <img className="rounded-circle square-60" src={item.user && item.user.image ? item.user.image.publicUrl : INITIAL_IMAGE} alt=""/>
+                                  <img className="rounded-circle square-60" src={item.user && item.user.image ? item.user.image.public_url : INITIAL_IMAGE} alt=""/>
                                 </div>
                                 <div className="">
                                   <p className="font-weight-bold mb-0">{item.user && item.user.firstname} {item.user && item.user.lastname}</p>
@@ -554,9 +552,9 @@ class DetailPage extends Component {
                                     fullSymbol="fa fa-star text-warning"
                                     readonly
                                   /> | <span className="font-italic">{item.updatedAt.slice(0,10)}</span></p>
-                                  <p className="text-secondary mb-0">Màu sắc: {item.color.nameVn}</p>
+                                  <p className="text-secondary mb-0">Màu sắc: {item.color.name_vn}</p>
                                   <p className="mb-0">{item.content}</p>
-                                  <p className="directory rounded p-2 w-fit-content" onClick={()=> this.onLiked(item.id, item.like)}><i className="fa fa-thumbs-up text-secondary"></i><span className="ml-2 text-secondary">{item.like.length > 0 ? item.like.length :  `${t('detail.review.useful')}?`}</span></p>
+                                  <p className="directory rounded p-2 w-fit-content" onClick={()=> this.onLiked(item._id, item.like)}><i className="fa fa-thumbs-up text-secondary"></i><span className="ml-2 text-secondary">{item.like.length > 0 ? item.like.length :  `${t('detail.review.useful')}?`}</span></p>
                                 </div>
                                 </div>
                               </div>

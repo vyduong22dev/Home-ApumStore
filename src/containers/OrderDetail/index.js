@@ -42,9 +42,9 @@ class OrderDetail extends Component {
     const {onGetReview, authInfo} = this.props;
     this.setState({product});
     var params = {
-      user: authInfo.id,
+      user: authInfo._id,
       product: product.product,
-      color: product.color.id
+      color: product.color._id
     }
     onGetReview(params);
     this.onCloseModal("modal", true)
@@ -64,7 +64,7 @@ class OrderDetail extends Component {
           {orderItem ? <div className="modal-content">
             <div className="modal-header">
               <div className="text-center w-100">
-                <h3 className="modal-title m-0">{t('order.info-bill.card')} {orderItem.id}</h3>
+                <h3 className="modal-title m-0">{t('order.info-bill.card')} {orderItem._id}</h3>
               </div>
               <div className="form-check form-switch">
                 <button type="button" className="btn-close rounded-circle bg-light p-2" onClick={() => this.onClose()} data-bs-dismiss="modal"></button>
@@ -77,7 +77,7 @@ class OrderDetail extends Component {
                     {/* <i className="fa fa-calendar-alt text-xl "></i> */}
                   </div>
                   <div className="form-floating">
-                    <input type="text" className="form-control border-0" id="createdAt" name="createdAt" defaultValue={orderItem.createTimeStamp.slice(0,10)} />
+                    <input type="text" className="form-control border-0" id="createdAt" name="createdAt" defaultValue={orderItem.createdAt.slice(0,10)} />
                     <label htmlFor="createdAt">{t('order.date.input')}</label>
                   </div>
                 </div>
@@ -88,8 +88,8 @@ class OrderDetail extends Component {
                   <div className="form-floating">
                     <input type="text" className="form-control border-0" id="total_price" name="total_price" 
                     defaultValue={currency==="VND" 
-                    ? numberWithCommas(orderItem.totalPrice) 
-                    : numberWithCommas(parseFloat(tryConvert(orderItem.totalPrice, currency, false)).toFixed(2))}/>
+                    ? numberWithCommas(orderItem.total_price) 
+                    : numberWithCommas(parseFloat(tryConvert(orderItem.total_price, currency, false)).toFixed(2))}/>
                     <label htmlFor="total_price">{t('order.total.input')} ({currency})</label>
                   </div>
                 </div>
@@ -109,7 +109,7 @@ class OrderDetail extends Component {
                   </div>
                   <div className="form-floating">
                     <input type="text" className="form-control border-0" id="payment_method" name="payment_method" 
-                    defaultValue={orderItem.paymentMethod === "paypal" ? 'Paypal' : `${t('checkout.cod.button')}`}/>
+                    defaultValue={orderItem.payment_method === "local" ? `${t('checkout.cod.button')}` : 'Paypal'}/>
                     <label htmlFor="payment_method">{t('order.payment.way')}</label>
                   </div>
                 </div>
@@ -123,7 +123,7 @@ class OrderDetail extends Component {
                     <input type="text" className="form-control border-0" name="confirmed" id="confirmed" defaultValue={ orderItem.confirmed===true ? `${t('order.confirm.true')}` : `${t('order.confirm.false')}`}/>
                     <label htmlFor="confirmed">{t('order.confirm.label')}</label>
                     <span className={orderItem.confirmed===true && "d-none"}>
-                      <button className="btn btn-success" onClick={() => {this.confirmOrder(orderItem.id)}}>{t('order.confirm.button')}</button>
+                      <button className="btn btn-success" onClick={() => {this.confirmOrder(orderItem._id)}}>{t('order.confirm.button')}</button>
                     </span>
                   </div>
                   </>
@@ -136,16 +136,16 @@ class OrderDetail extends Component {
                 </div>
               </div>
               <div className="rounded shadow-sm">
-                {orderItem.orderList.map((item, index) =>{
+                {orderItem.order_list.map((item, index) =>{
                   return (
                   <div className="card my-1" key={index}>
                     <div className="row no-gutters text-center">
                       <div className="col-sm-3 h-120" onClick={()=>this.onRenderDetail(item.product)}>
-                        <img className="h-100" src={item.image ? item.image.publicUrl : INITIAL_IMAGE} alt={item.name} />
+                        <img className="h-100" src={item.image ? item.image : INITIAL_IMAGE} alt={item.name} />
                       </div>
                       <div className="col-sm-3 align-self-center text-left">
                         <p className="text-dark m-0 font-weight-bold">{item.name}</p>
-                        <p className="text-dark m-0">{t('common.color')} {item.color && item.color.nameColor}</p>
+                        <p className="text-dark m-0">{t('common.color')} {item.color && item.color.name_vn}</p>
                       </div>
                       <div className="col-sm-3 align-self-center">
                         <p className="m-0">{numberWithCommas(item.price)} VND x {item.quantity}</p>
@@ -165,7 +165,7 @@ class OrderDetail extends Component {
                     <i className="fa fa-mobile-alt text-xl"></i>
                   </div>
                   <div className="form-floating" style={{width: "90%"}}>
-                    <input type="number" className="form-control border-0" id="shipping_phonenumber" name="shipping_phonenumber" defaultValue={orderItem.shippingPhonenumber}/>
+                    <input type="number" className="form-control border-0" id="shipping_phonenumber" name="shipping_phonenumber" defaultValue={orderItem.shipping_phonenumber}/>
                     <label htmlFor="shipping_phonenumber">{t('order.phone.order')}</label>
                   </div>
                 </div>
@@ -183,7 +183,7 @@ class OrderDetail extends Component {
                     <i className="fa fa-home text-xl"></i>
                   </div>
                   <div className="form-floating" style={{width: "90%"}}>
-                    <input type="text" className="form-control border-0 w-100" name="shipping_address" id="shipping_address" defaultValue={orderItem.shippingAddress}/>
+                    <input type="text" className="form-control border-0 w-100" name="shipping_address" id="shipping_address" defaultValue={orderItem.shipping_address}/>
                     <label htmlFor="shipping_address">{t('order.address.order')}:</label>
                   </div>
                 </div>

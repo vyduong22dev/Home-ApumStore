@@ -37,7 +37,12 @@ export const deleteProduct  = (productId) =>{
 
 // http://localhost:3000/products/best-seller  METHOD = GET
 export const getBestSeller = () =>{
-  return axiosService.get(`${API_ENDPOINT_AUTH}${url}/hot-sold`);
+  return axiosService.get(`${API_ENDPOINT_AUTH}${url}/best-seller`);
+}
+
+// http://localhost:3000/products/favorite  METHOD = GET
+export const getFavorite  = () =>{
+  return axiosService.get(`${API_ENDPOINT_AUTH}${url}/favorite`);
 }
 
 // http://localhost:3000/products/newest  METHOD = GET

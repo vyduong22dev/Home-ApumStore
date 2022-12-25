@@ -36,7 +36,7 @@ export const AuthorizationActionTypes = {
 }
 /**
  *
- * @param {phonenumber, password} payload
+ * @param {email, password} payload
  */
 const onLogin = (payload) => ({
   type: AuthorizationActionTypes.LOGIN,

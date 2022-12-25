@@ -20,7 +20,7 @@ class CartPage extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    document.title = "[ApumStore] Trang bán hàng"
+    document.title = "[TellMe] Trang bán hàng"
   }
 
   componentDidUpdate(prevProps) {
@@ -30,7 +30,7 @@ class CartPage extends Component {
     if (checkout !== prevProps.checkout) {
       for(let i=0; i< checkout.length; i++){
         total = total + checkout[i].quantity
-        totalPrice = totalPrice+ checkout[i].quantity* checkout[i].product.colors.find(item=> item.id === checkout[i].color).price
+        totalPrice = totalPrice+ checkout[i].quantity* checkout[i].product.colors.find(item=> item._id === checkout[i].color).price
       }
       this.setState({ 
         total,
@@ -108,18 +108,18 @@ class CartPage extends Component {
                     <div className="col-md-4 col-7">
                       <div className="row">
                         <div className="col-6 col-sm-4 col-md-3 text-center">
-                          <img className="float-start" alt={item.product.name} src={item.product.bigimage ? item.product.bigimage.publicUrl : "http://www.pha.gov.pk/img/img-02.jpg"}></img>
+                          <img className="float-start" alt={item.product.name} src={item.product.bigimage ? item.product.bigimage.public_url : "http://www.pha.gov.pk/img/img-02.jpg"}></img>
                         </div>
                         <div className="col-6 col-sm-8 col-md-9 align-self-center">
                         <p className="font-weight-bold mb-0">{item.product.name}</p>
-                        <p className="mb-0 text-secondary">{t('common.color')} {item.product.colors.find(i => i.id === item.color).nameEn}</p>
+                        <p className="mb-0 text-secondary">{t('common.color')} {item.product.colors.find(i => i._id === item.color).name_en}</p>
                         </div>
                       </div>
                     </div>
                     <div className="col-md-2 col-3 align-self-center text-center">
                     {currency==="VND" 
-                    ? numberWithCommas(item.product.colors.find(i => i.id === item.color).price) 
-                    : numberWithCommas(parseFloat(tryConvert(item.product.colors.find(i => i.id === item.color).price, currency, false)).toFixed(2))} {currency}
+                    ? numberWithCommas(item.product.colors.find(i => i._id === item.color).price) 
+                    : numberWithCommas(parseFloat(tryConvert(item.product.colors.find(i => i._id === item.color).price, currency, false)).toFixed(2))} {currency}
                       </div>
                     <div className="col-md-2 col-6 align-self-center text-center">
                       <div className="quantity form-inline">
@@ -134,8 +134,8 @@ class CartPage extends Component {
                     </div>
                     <div className="col-md-2 col-4 align-self-center text-right font-weight-bold">
                     {currency==="VND" 
-                    ? numberWithCommas(item.quantity * item.product.colors.find(i => i.id === item.color).price) 
-                    : numberWithCommas(parseFloat(tryConvert(item.quantity * item.product.colors.find(i => i.id === item.color).price, currency, false)).toFixed(2))} {currency}
+                    ? numberWithCommas(item.quantity * item.product.colors.find(i => i._id === item.color).price) 
+                    : numberWithCommas(parseFloat(tryConvert(item.quantity * item.product.colors.find(i => i._id === item.color).price, currency, false)).toFixed(2))} {currency}
                     </div>
                     <div className="col-md-1 col-2 text-center align-self-center">
                       <div className="form-check form-switch">

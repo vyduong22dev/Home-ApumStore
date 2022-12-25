@@ -57,8 +57,8 @@ class ImageGalleries extends Component {
     else{
       imageDetail.map((item) =>{
         images.push({
-          original: item.publicUrl ,
-          thumbnail: item.publicUrl
+          original: item.public_url ,
+          thumbnail: item.public_url
         });
       })
     }

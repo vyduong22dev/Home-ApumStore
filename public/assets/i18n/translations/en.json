@@ -14,7 +14,7 @@
   "common.clear-filter.button": "Clear all filters",
   "common.update.label": "Updating", 
   "common": "Graduation project", 
-  "common.address": "Ward 7, HCMC",
+  "common.address": "3109 Pham The Hien, Ward 7, District 8, HCMC",
 
   "accessory.category.title":"Accessories catalog",
   "accessory.page.title":"Accessory Page",
@@ -101,6 +101,8 @@
   "home.shop.button": "Shop now",
   "home.list.best":"Best seller Products",
   "home.list.new":"Newest Products",
+  "home.list.favorite":"Favorite Products",
+
   "installment.page.title": "Installment Page",
   "installment.toastify.error": "You have not selected a loan period",
   "installment.info.title": "Installment Information",
@@ -121,10 +123,10 @@
   "installment.sign.button": "Registration pending review",
   "installment.remind": "The actual difference is from 10,000 VND -> 100,000 VND per month, please go to the store directly for accurate advice",
 
-  "login.toastify.error": "Please enter phone number and password",
-  "login.toastify.error.1": "Please enter phone number to reset password",
+  "login.toastify.error": "Please enter email and password",
+  "login.toastify.error.1": "Please enter email to reset password",
   "login.forgot-password": "Forgot password",
-  "login.forgot.label": "Enter phone number for verification",
+  "login.forgot.label": "Enter email for verification",
 
   "header.login.button":"Login",
   "header.signup.button": "Register",

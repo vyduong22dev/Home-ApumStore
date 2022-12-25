@@ -10,7 +10,7 @@ class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      phonenumber: ""
+      email: ""
     }
   }
 
@@ -24,10 +24,10 @@ class ForgotPassword extends Component {
   }
 
   sendEmail() {
-    const { phonenumber } = this.state;
+    const { email } = this.state;
     const { onForgotPassword, t } = this.props
-    if(phonenumber) {
-      onForgotPassword({phonenumber});
+    if(email) {
+      onForgotPassword({email});
     }
     else{
       toastError(`${t('login.toastify.error.1')}`)
@@ -36,23 +36,23 @@ class ForgotPassword extends Component {
 
   render() {
     const { t } = this.props;
-    const { phonenumber } = this.state;
+    const { email } = this.state;
     return (  
       <div show="true" className="modal fade" id="forgotPassword" role="dialog" >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Quên mật khẩu</h5>
+              <h5 className="modal-title">{t('login.forgot-password')}</h5>
               <button type="button" className="close" data-bs-dismiss="modal">&times;</button>
             </div>
             <div className="modal-body">
               <div className="form-group">
-                <label>Nhập số điện thoại</label>
-                <input type="phonenumber" className="form-control" name="phonenumber" value={phonenumber} onChange={this.onChange}/>
+                <label>{t('login.forgot.label')}</label>
+                <input type="email" className="form-control" name="email" value={email} onChange={this.onChange}/>
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={() => this.sendEmail()}>Lấy mã xác nhận</button>
+              <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={() => this.sendEmail()}>Send email</button>
             </div>
           </div> 
         </div>
