@@ -5,7 +5,8 @@ export default function createApiAuthMiddle({ dispatch, getState }) {
     const authToken = localStorage.getItem("AUTH_USER");
     axiosService.changeHeaders({
       Authorization: authToken,
-      "token": '042cf697-8659-11eb-8be2-c21e19fc6803'
+      "token": '8d0cff40-85de-11ed-8183-12cf3da973bf',
+      "shop_Id": '121252'
     });
     return next(action);
   };

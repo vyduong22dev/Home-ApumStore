@@ -41,7 +41,7 @@ class CheckoutPage extends Component {
       shipping_district:"",
       shipping_ward: "",
       // shipping
-      service_type_id: "1",
+      service_type_id: "2",
     }
   }
 

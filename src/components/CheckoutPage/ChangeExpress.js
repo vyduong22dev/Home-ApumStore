@@ -54,14 +54,14 @@ class ChangePassword extends Component {
               </div>
               <div className="rounded border ml-4 px-3 py-2">
                 <div className="form-check">
-                  <input className="form-check-input" type="radio" name="service_type_id" id="2" value="2" onChange={this.onChange}/>
+                  <input className="form-check-input" type="radio" name="service_type_id" id="2" value="2" defaultChecked onChange={this.onChange}/>
                   <label className="form-check-label" htmlFor="2">
                     <p className="mb-0">{SHIPPING_EXPRESS}</p>
                     <p className="mb-0 text-secondary smaller">{t('checkout.modal.select.1')}</p>
                   </label>
                 </div>
                 <div className="form-check">
-                  <input className="form-check-input" type="radio" name="service_type_id" id="1" value="1" defaultChecked onChange={this.onChange}/>
+                  <input className="form-check-input" type="radio" name="service_type_id" id="1" value="2"  onChange={this.onChange}/>
                   <label className="form-check-label" htmlFor="1">
                     <p className="mb-0">{SHIPPING_STANDARD}</p>
                     <p className="mb-0 text-secondary smaller">{t('checkout.modal.select.2')}</p>
