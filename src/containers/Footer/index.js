@@ -2,32 +2,61 @@ import React, { Component } from 'react';
 import './styles.css';
 import { assets } from '../../constants/assetsImage';
 import { withTranslation } from 'react-i18next'
+
 class Footer extends Component {
+  componentDidUpdate() {
+    /*global FB*/
+    if (FB) {
+      FB.XFBML.parse();
+    }
+  }
+  componentDidMount(){
+    /* FB comment plugin */
+    window.fbAsyncInit = () => {
+      /* eslint-disable */
+      window.FB.init({
+        appId: '308035613517523',
+        xfbml: true,
+        version: 'v2.6'
+      });
+      FB.XFBML.parse();
+      /* eslint-disable */
+    };
+
+    (function(d, s, id){
+        let js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = '//connect.facebook.net/en_US/sdk.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    /* FB comment plugin */
+  }
 
   render() {
+    const {t} = this.props;
     return (
       <>
-     
-          <section id="footer" className="bg-dark text-white">
-      <div className="container">
-        <div className="row">
-          <div className="col-md-3 col-sm-6">
-            <h1 >
-              APum Store 
-            </h1>
-          <img src={assets('brand-footer.png')} className="w-100" alt="Apum Store" 
-          
-            layout="responsive" width="220" height="84" />
-    
-            <p className="mt-3">
-                Nơi trải nghiệm sự thăng hoa của công nghệ .
-            </p>
-            <p>Bản quyền mới nhất năm @2022</p>
-          </div>
-          <div className="col-3">
-            <p className="fs-3 fw-bolder">Thời gian mở cửa</p>
-            <p>Thứ 2 đến thứ 7: 8h - 22h</p>
-            <p>Chủ nhật: 9h - 23h</p>
+        <div className="footer-top-area py-2">
+          <div className="container">
+            <div className="row">
+            <div className="col-md-3 col-sm-6">
+      
+            <img src={assets('brand-footer.png')} className="75" alt="Apum Store" 
+              layout="responsive" width="220" height="84" />
+             
+             <h6 >
+              {t("common.slug")} 
+              </h6>
+              <p> {t("common.slug1")}</p>
+            </div>
+             <div className="col-6">
+            <p className="fs-3 fw-bolder">{t("common.contact")}</p>
+            <p>{t("common.company")}</p>
+            <p>{t("common.taxcode")}</p>
+            <p>{t("common.address")}</p>
+            <p>{t("common.phone")}</p>
+            <p>{t("common.email")}</p>
             <div className="d-flex">
             
               <div
@@ -130,116 +159,37 @@ class Footer extends Component {
               </div>
              
             </div>
-          
-          </div>
-          <div className="col-6">
-            <p className="fs-3 fw-bolder">Liên hệ với chúng tôi</p>
-            <p>CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ DỊCH VỤ F&B VIỆT NAM</p>
-            <p>Mã số thuế: 316657994</p>
-            <p>Địa chỉ ĐKKD: 168 CMT8 P.1, Q.1 , TP HCM</p>
-            <p>Phone: 1900 633 818</p>
-            <p>Email: order.applepum@gmail.com</p>
+            
+             </div>
+             <div className="col-3">
+            
+            <p className="fs-3 fw-bolder">{t("common.open")}</p>
+            <p>{t("common.weekday")}</p>
+            <p>{t("common.weekend")}</p>
             <img src={assets('ghn.png')}
             alt="Girl in a jacket" 
             layout="responsive" width="220" height="84" />
+          
+          </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+        
+        <div className="footer-bottom-area">
+          <div className="container">
+            <div className="row">
+              <div className="col-12 text-center">
+                <div className="copyright">
+                  
+                  <p className="my-1">&copy; 2022 {t("common")}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </>
     );
   }
 }
 
 export default withTranslation()(Footer);
-// class Footer extends Component {
-//   componentDidUpdate() {
-//     /*global FB*/
-//     if (FB) {
-//       FB.XFBML.parse();
-//     }
-//   }
-//   componentDidMount(){
-//     /* FB comment plugin */
-//     window.fbAsyncInit = () => {
-//       /* eslint-disable */
-//       window.FB.init({
-//         appId: '308035613517523',
-//         xfbml: true,
-//         version: 'v2.6'
-//       });
-//       FB.XFBML.parse();
-//       /* eslint-disable */
-//     };
-
-//     (function(d, s, id){
-//         let js, fjs = d.getElementsByTagName(s)[0];
-//         if (d.getElementById(id)) {return;}
-//         js = d.createElement(s); js.id = id;
-//         js.src = '//connect.facebook.net/en_US/sdk.js';
-//         fjs.parentNode.insertBefore(js, fjs);
-//     }(document, 'script', 'facebook-jssdk'));
-//     /* FB comment plugin */
-//   }
-
-//   render() {
-//     const {t} = this.props;
-//     return (
-//       <>
-//         <div className="footer-top-area py-2">
-//           <div className="container">
-//             <div className="row">
-//               <div className="col-md-3 col-sm-6">
-//                 <img src={assets('brand-footer.png')} className="w-100" alt="Apum Store" />
-//                 <div className="row">
-//                   <div className="col-12 form-inline">
-//                     <div className="bill-icon" style={{width: "12%"}}>
-//                       <i className="fa fa-map-marker-alt text-xl"></i>
-//                     </div>
-//                     <div className="ml-3 my-1" style={{width: "80%"}}>
-//                       <p className="mb-0">{t("common.address")}</p>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               <div className="col-md-3 col-sm-6">
-//                 <h3 className="mt-4 text-light">{t("order.payment.way")}</h3>
-//                 <img className="rounded bg-light" src="https://cdn.pixabay.com/photo/2015/05/26/09/37/paypal-784404__480.png" style={{ width: '30%' }} alt=""></img>
-//               </div>
-
-//               <div className="col-md-3 col-sm-5">
-//                 <h3 className="mt-4 text-light">{t("checkout.express-unit.input")}</h3>
-//                 <img className="rounded bg-light" style={{ width: '30%' }} src="https://donhang.ghn.vn/static/media/Giao_Hang_Nhanh_Toan_Quoc_color.b7d18fe5.png"></img>
-//               </div>
-
-//               <div className="col-md-3 col-sm-7">
-//                 <h3 className="mt-4 text-light">Fanpage</h3>
-//                 <div className="w-100">
-//                   <div className="fb-page" data-href="https://www.facebook.com/Apum Store.tieuluanchuyennganh"
-//                     data-width="320" data-height="" data-small-header="false" data-adapt-container-width="false" data-hide-cover="false" data-show-facepile="false">
-//                     <blockquote cite="https://www.facebook.com/Apum Store.tieuluanchuyennganh" class="fb-xfbml-parse-ignore">
-//                       <a href="https://www.facebook.com/Apum Store.tieuluanchuyennganh">Apum Store - Hệ thống Laptop</a></blockquote></div>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-
-//         <div className="footer-bottom-area">
-//           <div className="container">
-//             <div className="row">
-//               <div className="col-12 text-center">
-//                 <div className="copyright">
-//                   <p className="my-1">&copy; 2021 {t("common")}</p>
-//                 </div>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </>
-//     );
-//   }
-// }
-
-// export default withTranslation()(Footer);

@@ -337,7 +337,8 @@ class Header extends Component {
             <div className="row">
               <div className="col-sm-6 col-md-5 col-lg-4 col-xl-3">
                 <div className="logo">
-                  <Link to="/"><img src={assets("brand.png")} alt="" className="w-100" /></Link>
+                  <Link to="/"> <img src={assets('brand-footer.png')} className="w-80" alt="Apum Store" 
+              layout="responsive" width="220" height="220" /></Link>
                 </div>
               </div>
               <div className="col-md-6 col-12 align-self-center py-1">
