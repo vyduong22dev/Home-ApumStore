@@ -55,7 +55,7 @@ class LoginPage extends Component {
 	}
 
 	componentDidMount(){ 
-		document.title = "[TellMe] Đăng nhập"
+		document.title = "[ApumStore] Đăng nhập"
 		this.improveScreen()
 	}
 
@@ -103,12 +103,12 @@ class LoginPage extends Component {
 				<img className="wave" src={ assets("wave.png")} alt="" />
 				<div className="container_login">
 					<div className="img">
-						<img src={ assets("bg.svg")} alt="" />
+						<img src={ assets("bg.png")} alt="" />
 					</div>
 					<div className="login-content">
 						<form>
 							<h2 className="title">Welcome to</h2>
-							<img className="pb-4" src={assets("brand.png")} alt=""></img>
+							<img className="pb-4" src={assets("brand1.png")} alt=""></img>
 							<div className="input-div one">
 								<div className="i">
 									<i className="fas fa-user" />

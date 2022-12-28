@@ -315,10 +315,7 @@ class Header extends Component {
                     <i className="fa fa-money-bill-wave"></i>
                     <select className="select-box" onChange={this.handleChangeCurrency} value={currencyCode}>
                       <option value="VND">{t('header.vnd.select')}</option>
-                      <option value="USD">{t('header.usd.select')}</option>
-                      <option value="CNY">{t('header.cny.select')}</option>
-                      <option value="EUR">{t('header.eur.select')}</option>
-                      <option value="JPY">{t('header.jpy.select')}</option>
+                     
                     </select>
                     </li>
                     <li className="dropdown dropdown-small">
@@ -452,7 +449,7 @@ class Header extends Component {
             socketUrl={"http://localhost:5005"}
             socketPath={"/socket.io/"}
             customData={{"language": "en"}} // arbitrary custom data. Stay minimal as this will be added to the socket
-            title={"TellMe - Mobile Shopping Online"}
+            title={"Apum Store - Mobile Shopping Online"}
             profileAvatar={assets("logo_fe.png")}
           />
         </div>

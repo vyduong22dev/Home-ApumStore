@@ -75,7 +75,7 @@ class CheckoutPage extends Component {
   }
 
   componentDidMount() {
-    document.title = "[TellMe] Trang bán hàng"
+    document.title = "[ApumStore] Trang bán hàng"
     const {onGetListCity} = this.props;
     var total = 0;
     var totalPrice = 0;
@@ -435,7 +435,7 @@ class CheckoutPage extends Component {
                       </div>
                     </div>
                     <div className="form-floating mb-3">
-                      <input type="tel" className="form-control"  name="shipping_phone" placeholder="Nhập số điện thoại" value={shipping_phone} onChange={this.onChange}/>
+                      <input type="tel" className="form-control"  name="shipping_phone" placeholder="Nhập số Laptop" value={shipping_phone} onChange={this.onChange}/>
                       <label >{t('checkout.phone.input')}</label>
                     </div>
                   </div>}
