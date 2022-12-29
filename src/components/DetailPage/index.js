@@ -396,7 +396,7 @@ class DetailPage extends Component {
                       <div className="row">
                         {(like ? (like.length > 0 ? like.map((product, index) => {
                           return (
-                              <ProductItem product={product._id} key={index} />
+                              <ProductItem product={product} key={index} />
                             )
                         }) : <div className="col-12 my-4">
                         <div className="text-center my-5">

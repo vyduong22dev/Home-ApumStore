@@ -52,7 +52,7 @@ export const getNewest  = () =>{
 
 // http://localhost:3000/products-like?product=6069f4fa8fa8a12d34256498  METHOD = GET
 export const getLikeProducts = (productId) =>{
-  return axiosService.get(`${API_ENDPOINT_AUTH}/products/best-seller`);
+  return axiosService.get(`${API_ENDPOINT_AUTH}/products/favorite`);
 };
 
 // http://localhost:3000/products-relate?product=6069f4fa8fa8a12d34256498  METHOD = GET
