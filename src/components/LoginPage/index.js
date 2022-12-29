@@ -138,7 +138,7 @@ class LoginPage extends Component {
 									</form>
 								</div>
 								
-								<div className="col-12">
+								{/* <div className="col-12">
 									<GoogleLogin
 									clientId={GOOGLE_ID}
 									buttonText="Login"
@@ -159,7 +159,7 @@ class LoginPage extends Component {
 										<button onClick={renderProps.onClick} className="btn-primary"><FontAwesomeIcon icon={faFacebookF} className="mr-1"/>Login with Facebook</button>
 									)}
 									/>
-								</form>
+								</form> */}
 							</div>
 						</form>
 						<ForgotPassword/>

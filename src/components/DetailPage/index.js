@@ -239,6 +239,7 @@ class DetailPage extends Component {
     const {
       product, currency, t, review, group, total, count, location, relate, like, authInfo,
     } = this.props;
+    debugger;
     const {quantity, imageColor, check, _check } = this.state;
     const filter = getFilterParams(location.search);
     
@@ -393,9 +394,9 @@ class DetailPage extends Component {
                     </div>
                     <div className="tab-pane fade" id="like" role="tab" aria-labelledby="like-tab">
                       <div className="row">
-                        {review && review.length > 0 ? (like ? (like.length > 0 ? like.map((product, index) => {
+                        {(like ? (like.length > 0 ? like.map((product, index) => {
                           return (
-                              <ProductItem product={product} key={index} />
+                              <ProductItem product={product._id} key={index} />
                             )
                         }) : <div className="col-12 my-4">
                         <div className="text-center my-5">
@@ -405,21 +406,15 @@ class DetailPage extends Component {
                           <h4>{t("detail.like.not-founded")}</h4>
                         </div>
                       </div>) : <Loader/>)
-                        : <div className="col-12 my-4">
-                        <div className="text-center my-5">
-                          <div className="h-120">
-                          <img className="h-100" src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/a60759ad1dabe909c46a817ecbf71878.png" alt="404 not found"></img>
-                          </div>
-                          <h4>{t("detail.like.not-founded")}</h4>
-                        </div>
-                      </div>}
+                      //   
+                    }
                       </div>
                     </div>
                     <div className="tab-pane fade show active" id="relate" role="tab" aria-labelledby="relate-tab">
                       <div className="row">
-                        {product.description && product.description.length > 15 ? (relate ? relate.map((product, index) => {
+                        {product.description && product.description.length > 15 ? (group ? group.products.map((product, index) => {
                           return (
-                              <ProductItem product={product} key={index}/>
+                              <ProductItem product={product.product} key={index}/>
                             )
                         }) : <Loader/>)
                         : <div className="col-12 my-4">

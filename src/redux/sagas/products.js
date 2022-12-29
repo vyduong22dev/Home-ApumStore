@@ -119,7 +119,7 @@ function* handleGetLike({ id }) {
     const result = yield call(getLikeProducts, id);
     const data = get(result, "data", {});
     if (data.code !== 200) throw data;
-    yield put(ProductsActions.onGetLikeSuccess(data.result.recommend));
+    yield put(ProductsActions.onGetLikeSuccess(data.products));
   } catch (error) {
     yield put(ProductsActions.onGetLikeError(error));
   }

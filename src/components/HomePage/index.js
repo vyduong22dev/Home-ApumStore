@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './styles.css';
+
 import { Link } from 'react-router-dom'
 import { withTranslation } from 'react-i18next'
 import { connect } from 'react-redux';
@@ -65,7 +66,24 @@ class HomePage extends Component {
         <div className="zigzag-bottom"></div>
         <div className="container">
           <div className="row">
-            <div className="col-md-3 col-sm-6 d-none d-md-block align-self-center">
+          <div className="col-md-3 col-sm-6 d-none d-md-block align-self-center">
+               
+      <div className="w-100 h-100 position-absolute top-0 start-0 text-white  d-flex justify-content-center align-items-center flex-column">
+        <div className="px-4 py-5 card bg-opacity-10 text-center" style={{backgroundColor:'rgb(103 152 215)'}}>
+          <div className="fw-bolder fs-1">
+             Apum Store
+          </div>
+             ĐI LÊN CÙNG THỜI ĐẠI
+             <button type="button" className="btn btn-secondary" style={{width: '240px',height:'50px',backgroundColor:'#fff3f3'}} href="/product">
+          <Link className="btn btn btn-secondary-primary btn-lg w-100 rounded-pill fs-6"  to='/promotion'>
+              KHUYẾN MÃI HÔM NAY
+          </Link>
+          </button>
+         </div>
+         
+        </div>
+            </div>
+            {/* <div className="col-md-3 col-sm-6 d-none d-md-block align-self-center">
               <div className="single-promo promo1 my-1 rounded">
                 <i className="fa fa-sync-alt"></i>
                 <p>{t('home.feature.1')}</p>
@@ -74,12 +92,13 @@ class HomePage extends Component {
                 <i className="fa fa-truck"></i>
                 <p>{t('cart.free-ship')}</p>
               </div>
-            </div>
+            </div> */}
             {listAd ? <div className="col-12 col-md-6 align-self-center">
               <Carousel
                 activeIndex={activeIndex}
                 next={this.next}
                 previous={this.previous}
+                style
               >
                 <CarouselIndicators items={listAd} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
                 {listAd.map((item) => {
@@ -111,13 +130,13 @@ class HomePage extends Component {
                 <rect x="3" y="3" rx="12" ry="12" width="636" height="276" />
               </ContentLoader></div>}
             <div className="col-md-3 col-sm-6 d-none d-md-block align-self-center">
-              <div className="single-promo promo3 my-1 rounded">
-                <i className="fa fa-lock"></i>
-                <p>{t('home.feature.3')}</p>
+            <div className="single-promo promo2 my-1 rounded">
+                <i className="fa fa-truck"></i>
+                <p>{t('cart.free-ship')}</p>
               </div>
-              <div className="single-promo promo4 my-1 rounded">
-                <i className="fa fa-gift"></i>
-                <p>{t('home.feature.4')}</p>
+              <div className="single-promo promo1 my-1 rounded">
+                <i className="fa fa-sync-alt"></i>
+                <p>{t('home.feature.3')}</p>
               </div>
             </div>
           </div>
