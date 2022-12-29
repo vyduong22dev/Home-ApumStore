@@ -199,6 +199,7 @@
   "order.status.3": "Đang giao",
   "order.status.4": "Đã giao",
   "order.status.5": "Đã hủy",
+  "order.status.6": "Giao hàng không thành công",
 
   "search.label": "Tìm kiếm sản phẩm",
   "search.placeholder.input": "Nhập sản phẩm cần tìm",

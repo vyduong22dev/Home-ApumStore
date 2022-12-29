@@ -38,6 +38,10 @@ const statusList = [
     name: "Đã hủy",
     name_en: "Cancelled",
     state: {active:-1}
+  },{
+    name: "Giao hàng không thành công",
+    name_en: "Failed",
+    state: {confirmed:1, status:2}
   }
 ];
 
@@ -109,6 +113,7 @@ class PurchasePage extends Component {
       else{
         if(status===-1) return t("order.status.2");
         else if(status===0) return t("order.status.3");
+        else if(status === 2)  return t("order.status.6")
         else return t("order.status.4");
       }
     }

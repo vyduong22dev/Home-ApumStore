@@ -199,6 +199,7 @@
   "order.status.3": "Delivering",
   "order.status.4": "Delivered",
   "order.status.5": "Cancelled",
+  "order.status.6": "Delivery Failed",
 
   "search.label": "Search products",
   "search.placeholder.input": "Input product keywork",
