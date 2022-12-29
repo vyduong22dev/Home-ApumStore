@@ -292,7 +292,7 @@ class DetailPage extends Component {
                   readonly
                 /><span className="ml-2">{total} {t('common.review')}</span>
               </div>
-              {group && <div className="col-12 form-inline">
+              {/* {group && <div className="col-12 form-inline">
                 {group.products.map(item =>{
                   return(<button type="button" key={item._id} 
                     className="card text-dark py-2 px-3 my-2 mr-3 w-auto"
@@ -302,7 +302,7 @@ class DetailPage extends Component {
                     <p className="mb-0 h7">{item.product.price_min ? this.setPrice(currency, item.product.price_min, item.product.price_min) : 'NaN'} {currency}</p>
                   </button>)
                 })}
-              </div>}
+              </div>} */}
               <div className="my-2 border-bottom"></div>
               <h4 className="mb-0">{t('detail.color.label')}</h4>
               <div className="col-12 form-inline">
@@ -440,10 +440,10 @@ class DetailPage extends Component {
                     <a className="nav-link" id="profile-tab" data-bs-toggle="tab" href="#specification" role="tab" aria-controls="profile"
                     aria-selected="false">{t('detail.specification.tab')}</a>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <a className="nav-link" id="contact-tab" data-bs-toggle="tab" href="#comment" role="tab" aria-controls="contact"
                     aria-selected="false">{t('detail.comment.tab')}</a>
-                  </li>
+                  </li> */}
                   <li className="nav-item">
                     <a className="nav-link active" id="review-tab" data-bs-toggle="tab" href="#review" role="tab" aria-controls="review"
                     aria-selected="false">{t('detail.review.tab')}</a>
@@ -471,13 +471,13 @@ class DetailPage extends Component {
                       </table>
                     </div>
                   </div>
-                  <div className="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="contact-tab">
+                  {/* <div className="tab-pane fade" id="comment" role="tabpanel" aria-labelledby="contact-tab">
                     <div className="row">
                       <div className="col-12">
                         <div className="fb-comments" data-href={`${LOCAL}/#/product/${product.pathseo}/${product._id}`} data-width="100%" data-numposts="5"></div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
                     <div className="row">
                       <div className="col-lg-6">
@@ -485,7 +485,7 @@ class DetailPage extends Component {
                           <div className="col-6">
               
                             <div className="box_total">
-                              <h5>Overall</h5>
+                              <h5>Đánh giá sản phẩm</h5>
                               <h1>{product.stars ? product.stars : ""}</h1>
                               <h6>({total} {t('common.review')})</h6>
                             </div>
