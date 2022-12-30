@@ -138,32 +138,9 @@ class LoginPage extends Component {
 									</form>
 								</div>
 								
-								<div className="col-12">
-									<GoogleLogin
-									clientId={GOOGLE_ID}
-									buttonText="Login"
-									onSuccess={this.responseGoogle}
-									onFailure={this.responseGoogle}
-									render={renderProps => (
-										<button onClick={renderProps.onClick} disabled={renderProps.disabled} className="btn-danger mr-3"><FontAwesomeIcon icon={faGoogle} className="mr-1"/>Login with Google</button>
-									)}
-									/>
-								</div>
-								<form onSubmit={this.onSubmit} className="col-12 w-100">
-									<FacebookLogin
-									appId={FACEBOOK_ID}
-									autoLoad={true}
-									onFailure={this.responseFacebook}
-									callback={this.responseFacebook}
-									render={renderProps => (
-										<button onClick={renderProps.onClick} className="btn-primary"><FontAwesomeIcon icon={faFacebookF} className="mr-1"/>Login with Facebook</button>
-									)}
-									/>
-								</form>
 							</div>
 						</form>
-						<ForgotPassword/>
-					</div>
+					</div>x
 				</div>
 				
 			</div>
