@@ -75,7 +75,7 @@ class HomePage extends Component {
           </div>
           {t('cart.slug')}
              <Link className="button"to="/promotion">
-            <button > {t('cart.slug1')}
+            <button > {t('cart.slug1')} 
             
         <svg className="button__svg" role="presentational" viewBox="0 0 600 600">
           <defs>
