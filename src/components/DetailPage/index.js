@@ -239,7 +239,7 @@ class DetailPage extends Component {
     const {
       product, currency, t, review, group, total, count, location, relate, like, authInfo,
     } = this.props;
-    debugger;
+
     const {quantity, imageColor, check, _check } = this.state;
     const filter = getFilterParams(location.search);
     
